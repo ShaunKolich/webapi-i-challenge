@@ -92,12 +92,17 @@ server.put('/db/:id', (req, res) => {
     const changes = req.body;
     db.update(id, changes)
         .then(updatedDB => {
+            console.log(typeof updatedDB)
             if (updatedDB) {
-                res.json(updatedDB);
-            }
+            db.findById(id)
+                .then(data => {
+                    res.status(200).json(data)
+                })
+            }else{
             res.status(404).json({
                 message: 'Invalid ID'
             })
+        }
 
         })
         .catch(err => {
