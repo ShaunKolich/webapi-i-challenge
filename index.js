@@ -1,5 +1,7 @@
 // implement your API here
 // implement your API here
+require('dotenv').config();
+
 const express = require('express');
 
 //other files
@@ -7,6 +9,8 @@ const db = require('./data/db');
 
 //global object
 const server = express();
+
+const port = process.env.PORT || 4000;
 
 //middleware 
 server.use(express.json());
@@ -92,7 +96,7 @@ server.put('/db/:id', (req, res) => {
     const changes = req.body;
     db.update(id, changes)
         .then(updatedDB => {
-            console.log(typeof updatedDB)
+            // console.log(typeof updatedDB)
             if (updatedDB) {
             db.findById(id)
                 .then(data => {
@@ -135,6 +139,6 @@ server.get('/db/:id', (req, res) => {
 })
 
 //setting the port
-server.listen(4000, () => {
-    console.log('Server is listening')
+server.listen(port, () => {
+    console.log(`Server is listening PORT ${port}`)
 })
